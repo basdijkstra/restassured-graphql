@@ -56,7 +56,9 @@ public class BasicGraphQLTest {
         GraphQLQuery query = new GraphQLQuery();
         query.setQuery("query getLaunches($limit: Int!){ launches(limit: $limit) { mission_name } }");
 
-        QueryLimit queryLimit = new QueryLimit(10);
+        QueryLimit queryLimit = new QueryLimit();
+        queryLimit.setLimit(10);
+        
         query.setVariables(queryLimit);
 
         given().
