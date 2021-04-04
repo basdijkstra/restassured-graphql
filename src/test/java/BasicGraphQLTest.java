@@ -1,4 +1,5 @@
 import io.restassured.http.ContentType;
+import org.json.JSONObject;
 import org.junit.*;
 
 import java.util.UUID;
@@ -27,7 +28,30 @@ public class BasicGraphQLTest {
     }
 
     @Test
-    public void getLaunches_checkMissionName_shouldBeThaicom6() {
+    public void getLaunches_checkMissionName_shouldBeThaicom6_usingJSONObject() {
+
+        GraphQLQuery query = new GraphQLQuery();
+        query.setQuery("query getLaunches($limit: Int!){ launches(limit: $limit) { mission_name } }");
+
+        JSONObject variables = new JSONObject();
+        variables.put("limit", 10);
+
+        query.setVariables(variables.toString());
+
+        given().log().body().and().
+            contentType(ContentType.JSON).
+            body(query).
+        when().
+            post("https://api.spacex.land/graphql/").
+        then().
+            assertThat().
+            statusCode(200).
+        and().
+            body("data.launches[0].mission_name", equalTo("Thaicom 6"));
+    }
+
+    @Test
+    public void getLaunches_checkMissionName_shouldBeThaicom6_usingPOJO() {
 
         GraphQLQuery query = new GraphQLQuery();
         query.setQuery("query getLaunches($limit: Int!){ launches(limit: $limit) { mission_name } }");
