@@ -13,7 +13,7 @@ public class BasicGraphQLTest {
     public void getCompanyData_checkCeo_shouldBeElonMusk() {
 
         GraphQLQuery query = new GraphQLQuery();
-        query.setQuery("{ company { ceo coo name } }");
+        query.setQuery("{ company { name ceo coo } }");
 
         given().
             contentType(ContentType.JSON).
@@ -38,7 +38,7 @@ public class BasicGraphQLTest {
 
         query.setVariables(variables.toString());
 
-        given().log().body().and().
+        given().
             contentType(ContentType.JSON).
             body(query).
         when().
