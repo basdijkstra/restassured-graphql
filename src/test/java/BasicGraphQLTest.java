@@ -1,7 +1,6 @@
 import io.restassured.http.ContentType;
 import org.json.JSONObject;
-import org.junit.*;
-
+import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
